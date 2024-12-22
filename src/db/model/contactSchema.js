@@ -14,12 +14,12 @@ const contactSchema = new Schema(
     },
     email: {
       type: String,
-      required: true,
+      required: false,
     },
     isFavourite: {
       type: Boolean,
       default: false,
-      required: true,
+      required: false,
     },
     contactType: {
       type: String,
