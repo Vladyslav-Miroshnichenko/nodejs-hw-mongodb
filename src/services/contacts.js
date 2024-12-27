@@ -9,7 +9,7 @@ export const getContact = async ({
 }) => {
   const limit = perPage;
   const skip = (page - 1) * limit;
-  const items = await ContactCollection.find()
+  const data = await ContactCollection.find()
     .skip(skip)
     .limit(limit)
     .sort({ [sortBy]: sortOrder });
@@ -17,7 +17,7 @@ export const getContact = async ({
   const paginationData = calcPaginationData({ total, page, perPage });
 
   return {
-    items,
+    data,
     total,
     ...paginationData,
   };
