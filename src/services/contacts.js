@@ -1,19 +1,31 @@
 import ContactCollection from '../db/model/contactSchema.js';
 import { calcPaginationData } from '../utils/calcPaginationData.js';
 
-export const getContact = async ({
+export const getContacts = async ({
   page = 1,
   perPage = 10,
   sortBy = '_id',
   sortOrder = 'asc',
+  filter = {},
 }) => {
   const limit = perPage;
   const skip = (page - 1) * limit;
-  const data = await ContactCollection.find()
+  const contactQuery = ContactCollection.find();
+
+  if (filter.minReleaseYear) {
+    contactQuery.where('releaseYear').gte(filter.minReleaseYear);
+  }
+  if (filter.maxReleaseYear) {
+    contactQuery.where('releaseYear').lte(filter.maxReleaseYear);
+  }
+
+  const data = await contactQuery
     .skip(skip)
     .limit(limit)
     .sort({ [sortBy]: sortOrder });
-  const total = await ContactCollection.countDocuments();
+  const total = await ContactCollection.find()
+    .merge(contactQuery)
+    .countDocuments();
   const paginationData = calcPaginationData({ total, page, perPage });
 
   return {
@@ -25,11 +37,13 @@ export const getContact = async ({
 
 export const getContactById = (id) => ContactCollection.findById(id);
 
+export const getContact = (filter) => ContactCollection.findOne(filter);
+
 export const addContact = (payload) => ContactCollection.create(payload);
 
-export const updateContact = async (_id, payload, options = {}) => {
+export const updateContact = async (filter, payload, options = {}) => {
   const { upsert = false } = options;
-  const result = await ContactCollection.findOneAndUpdate({ _id }, payload, {
+  const result = await ContactCollection.findOneAndUpdate(filter, payload, {
     upsert,
     includeResultMetadata: true,
   });

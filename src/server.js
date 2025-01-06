@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 import { logger } from './middlewares/logger.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
@@ -15,6 +16,7 @@ export const startServer = () => {
 
   app.use(cors());
   app.use(express.json());
+  app.use(cookieParser());
   app.use(logger);
 
   app.use('/auth', authRouter);
