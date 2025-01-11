@@ -3,9 +3,6 @@ import createHttpError from 'http-errors';
 import { getSession, getUser } from '../services/auth.js';
 
 export const authenticate = async (req, res, next) => {
-  //   const { authorization } = req.headers;
-  //   console.log(authorization);
-
   const authHeader = req.get('Authorization');
   if (!authHeader) {
     return next(createHttpError(401, 'Authorization header not found'));
@@ -20,6 +17,7 @@ export const authenticate = async (req, res, next) => {
   if (!session) {
     return next(createHttpError(401, 'Session not found'));
   }
+
   if (Date.now() > session.accessTokenValidUntil) {
     return next(createHttpError(401, 'Access token expired'));
   }

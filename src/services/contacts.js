@@ -18,6 +18,9 @@ export const getContacts = async ({
   if (filter.maxReleaseYear) {
     contactQuery.where('releaseYear').lte(filter.maxReleaseYear);
   }
+  if (filter.userId) {
+    contactQuery.where('userId').equals(filter.userId);
+  }
 
   const data = await contactQuery
     .skip(skip)
