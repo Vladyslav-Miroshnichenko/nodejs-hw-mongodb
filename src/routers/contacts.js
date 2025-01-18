@@ -3,6 +3,7 @@ import { Router } from 'express';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../utils/validateBody.js';
 import { isValidId } from '../middlewares/isValidId.js';
+import { upload } from '../middlewares/upload.js';
 
 import { contactAddSchem, contactUpdateSchem } from '../validation/contacts.js';
 import * as contactsController from '../controllers/contacts.js';
@@ -23,6 +24,7 @@ contactsRouter.get(
 
 contactsRouter.post(
   '/',
+  upload.single('poster'),
   validateBody(contactAddSchem),
   ctrlWrapper(contactsController.addContactsController),
 );

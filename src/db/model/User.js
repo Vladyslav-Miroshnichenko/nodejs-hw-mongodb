@@ -19,6 +19,14 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    photo: {
+      type: String,
+    },
+    // verify: {
+    //   type: Boolean,
+    //   default: false,
+    //   required: true,
+    // },
   },
   { versionKey: false, timestamps: true },
 );

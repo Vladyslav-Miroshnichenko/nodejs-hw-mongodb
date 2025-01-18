@@ -27,6 +27,9 @@ const contactSchema = new Schema(
       default: 'personal',
       required: true,
     },
+    poster: {
+      type: String,
+    },
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'user',
