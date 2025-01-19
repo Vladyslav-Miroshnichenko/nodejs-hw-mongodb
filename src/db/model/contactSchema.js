@@ -27,7 +27,7 @@ const contactSchema = new Schema(
       default: 'personal',
       required: true,
     },
-    poster: {
+    photo: {
       type: String,
     },
     userId: {
