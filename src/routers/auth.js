@@ -6,11 +6,23 @@ import {
   authLoginSchema,
   requestResetEmailSchema,
   resetPasswordSchema,
+  googleOAuthSchema,
 } from '../validation/auth.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import * as authController from '../controllers/auth.js';
 
 const authRouter = Router();
+
+authRouter.get(
+  '/get-oauth-url',
+  ctrlWrapper(authController.getGoogleOAuthUrlController),
+);
+
+authRouter.post(
+  '/confirm-oauth',
+  validateBody(googleOAuthSchema),
+  ctrlWrapper(authController.loginWithGoogleController),
+);
 
 authRouter.post(
   '/register',

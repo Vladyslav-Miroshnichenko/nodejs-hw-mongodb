@@ -1,0 +1,64 @@
+tags:
+  - Contacts
+summary: Create a new contact
+operationId: createContact
+description: This endpoint allows you to create a new contact in the database.
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - name
+          - phoneNumber
+          - contactType
+        properties:
+          name:
+            description: 'The name of the contact'
+            type: string
+            example: 'John Doe'
+          email:
+            description: 'The email address of the contact'
+            type: string
+            example: 'example@mail.com'
+          phoneNumber:
+            description: 'The phone number of the contact'
+            type: string
+            example: '111-111-11-11'
+          contactType:
+            description: 'The type of the contact'
+            type: string
+            example: 'personal'
+            enum: ['personal', 'home', 'work']
+          isFavourite:
+            description: 'Preferred contact'
+            type: boolean
+          photo:
+            description: 'Link to contact photo'
+            type: string
+            format: binary
+responses:
+  '201':
+    description: 'Contact created'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: 'Contact successfully created!'
+            data:
+              type: object
+              $ref: '../../components/schemas/contact.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
