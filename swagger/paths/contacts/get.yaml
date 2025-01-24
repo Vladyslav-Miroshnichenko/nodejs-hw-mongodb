@@ -21,16 +21,7 @@ parameters:
     schema:
       type: string
       enum:
-        [
-          '_id',
-          'name',
-          'phoneNumber',
-          'email',
-          'isFavourite',
-          'contactType',
-          'createdAt',
-          'updatedAt',
-        ]
+        ['_id', 'name', 'phoneNumber', 'email', 'isFavourite', 'contactType']
       example: 'name'
       default: '_id'
   - in: query
@@ -43,13 +34,13 @@ parameters:
     name: isFavourite
     schema:
       type: boolean
-      example: 'true'
+      example: 'false'
   - in: query
     name: contactType
     schema:
       type: string
       enum: ['work', 'home', 'personal']
-      example: 'work'
+      example: 'personal'
 responses:
   '200':
     description: 'Successfully found contacts!'
@@ -91,7 +82,7 @@ responses:
                 perPage:
                   type: number
                   example: 20
-                totalItems:
+                total:
                   type: number
                   example: 40
                 totalPages:
@@ -106,3 +97,5 @@ responses:
 
   '401':
     $ref: ../../components/responses/401.yaml
+  '500':
+    $ref: ../../components/responses/500.yaml
